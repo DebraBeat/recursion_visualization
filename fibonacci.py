@@ -12,24 +12,8 @@ def fib(i: int) -> int:
 
     return hashmap[i]
 
-# TODO:
-#       - Add Stack vis
-#       - Add Binary Tree vis
 
-
-class Stack(Scene):
-
-    def pop(self):
-        pass
-
-    def push(self):
-        pass
-
-    def top(self):
-        pass
-
-
-class Fibonacci(Scene):
+class FibonacciRegular(Scene):
     def construct(self):
         colors = [BLUE, GOLD, GREEN, PINK, TEAL]
         color_index = 0
@@ -66,3 +50,24 @@ class Fibonacci(Scene):
             rect = Group(rect, t, b, b_text)
             group.add(rect)
             self.play(group.animate.shift(LEFT))
+
+
+class FibonacciWithStack(Scene):
+    def construct(self):
+        stack = Group()
+
+        def push(element):
+            if len(stack) == 0:
+                element.move_to(ORIGIN + RIGHT * 6.0)
+            else:
+                element.move_to(stack.get_top() + (UP * 0.33 / 2))
+
+            stack.add(element)
+            self.play(FadeIn(element))
+
+        def pop():
+            if len(stack) > 0:
+                element = stack[-1]
+                self.play(FadeOut(element))
+                stack.remove(element)
+
