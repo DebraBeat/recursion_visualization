@@ -20,6 +20,32 @@ class FibonacciRegular(Scene):
         scale_factor = 1
         group = Group()
 
+        intro_text = Text("The Fibonacci sequence is a sequence of numbers named after "
+                          "the mathematician\n \"Fibonacci\" (he only had one word for "
+                          "his name).", font_size=20)
+        intro_text.shift(UP * 2.0)
+
+        definition_text = Text("The sequence is defined as follows:                         "
+                               "\n\n Let the "
+                               "first two elements each be equal to one.\n Every "
+                               "element afterwards is the sum of the previous "
+                               "two.\n In other words F_0 = 1, F_1 = 1, F_n = "
+                               "F_{n-1} + F_{n-2}", font_size=20)
+
+        transition_text = Text("If we set make squares with the length of a side being"
+                               "a fibonacci number we get the following:", font_size=20)
+
+        self.play(Write(intro_text))
+        self.wait(5)
+        self.play(Write(definition_text))
+        self.wait(5)
+        self.play(FadeOut(intro_text))
+        self.play(FadeOut(definition_text))
+
+        self.play(Write(transition_text))
+        self.wait(2)
+        self.play(FadeOut(transition_text))
+
         for i in range(0, 10):
             curr_fib = np.sqrt(fib(i))
             # next_fib = np.sqrt(fib(i + 1))
@@ -33,9 +59,11 @@ class FibonacciRegular(Scene):
 
             t = Text(f'{i}')
             b = Brace(rect)
+            equals = Text('=')
             b_text = Text(f'{fib(i)}')
             f_text = Text(f'Fibonacci of {i}')
-            f_text.shift(DOWN * 1.5)
+            f_text.shift(DOWN * 1.6)
+            equals.shift(DOWN * 1.25)
             b_text.shift(DOWN * 1.25)
             t.shift(UP)
 
@@ -44,6 +72,8 @@ class FibonacciRegular(Scene):
             self.play(Create(rect))
             self.play(FadeIn(b, f_text))
             self.play(FadeOut(f_text))
+            self.play(FadeIn(equals))
+            self.play(FadeOut(equals))
             self.play(FadeIn(b_text))
             self.wait(1)
 
@@ -71,6 +101,8 @@ class FibonacciWithStack(Scene):
     def top(self, stack):
         return stack[-1]
 
+    def get_vertex(self, num):
+        return Group()
     def construct(self):
         colors = [BLUE, GOLD, GREEN, PINK, TEAL]
         color_index = 0
@@ -84,7 +116,7 @@ class FibonacciWithStack(Scene):
 
         intro_text = Text(f'Fibonacci of {fib_idx} using stacks and trees')
         intro_text.shift(UP)
-        self.play(FadeIn(intro_text))
+        self.play(Write(intro_text))
         self.wait(1)
         self.play(FadeOut(intro_text))
 
