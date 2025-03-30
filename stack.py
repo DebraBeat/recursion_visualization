@@ -29,7 +29,7 @@ class Stack(Scene):
             ele.move_to(stack.get_top() + (UP * 0.33 / 2))
 
         stack.add(ele)
-        self.play(FadeIn(ele))
+        self.play(Create(rect), Write(text))
 
     def pop(self, stack):
         if len(stack) > 0:

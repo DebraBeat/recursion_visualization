@@ -126,9 +126,11 @@ class FibonacciWithStack(Scene):
         self.play(FadeIn(stack_text))
         self.wait(1)
 
-        root_coor = Tree.add_root(self, f"fib({fib_idx})")
+        root = Tree.add_root(self, f"fib({fib_idx})")
         Stack.push(self, stack, f"fib({fib_idx})")
 
-
+        lc = Tree.add_left_child(self, "test", root)
+        rc = Tree.add_right_child(self, "test", root)
+        Tree.remove_vertex(self, root)
 
         self.wait(3)
