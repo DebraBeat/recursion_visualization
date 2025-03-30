@@ -1,5 +1,7 @@
 from manim import *
 import numpy as np
+from stack import Stack
+from tree import Tree
 
 hashmap = {0: 1, 1: 1}
 
@@ -83,26 +85,24 @@ class FibonacciRegular(Scene):
 
 
 class FibonacciWithStack(Scene):
-    def push(self, stack, element):
-        if len(stack) == 0:
-            element.move_to(ORIGIN + RIGHT * 6.0)
-        else:
-            element.move_to(stack.get_top() + (UP * 0.33 / 2))
+    # def push(self, stack, element):
+    #     if len(stack) == 0:
+    #         element.move_to(ORIGIN + RIGHT * 6.0)
+    #     else:
+    #         element.move_to(stack.get_top() + (UP * 0.33 / 2))
+    #
+    #     stack.add(element)
+    #     self.play(FadeIn(element))
+    #
+    # def pop(self, stack):
+    #     if len(stack) > 0:
+    #         element = stack[-1]
+    #         self.play(FadeOut(element))
+    #         stack.remove(element)
+    #
+    # def top(self, stack):
+    #     return stack[-1]
 
-        stack.add(element)
-        self.play(FadeIn(element))
-
-    def pop(self, stack):
-        if len(stack) > 0:
-            element = stack[-1]
-            self.play(FadeOut(element))
-            stack.remove(element)
-
-    def top(self, stack):
-        return stack[-1]
-
-    def get_vertex(self, num):
-        return Group()
     def construct(self):
         colors = [BLUE, GOLD, GREEN, PINK, TEAL]
         color_index = 0
@@ -120,8 +120,15 @@ class FibonacciWithStack(Scene):
         self.wait(1)
         self.play(FadeOut(intro_text))
 
-        stack_text = Text('Stack', color=ORANGE)
+        stack_text = Text('Stack', color=BLUE)
         stack_text.move_to(ORIGIN + RIGHT * 6.0)
         stack_text.shift(UP * 3.0)
         self.play(FadeIn(stack_text))
         self.wait(1)
+
+        root_coor = Tree.add_root(self, f"fib({fib_idx})")
+        Stack.push(self, stack, f"fib({fib_idx})")
+
+
+
+        self.wait(3)
