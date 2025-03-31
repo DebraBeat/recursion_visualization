@@ -31,6 +31,22 @@ class Stack(Scene):
         stack.add(ele)
         self.play(Create(rect), Write(text))
 
+    def change(self, stack, new_text):
+        # needs to be rerwitten
+        if len(stack) > 0:
+            element = stack[-1]
+            rect = element[0]
+            new_element_text = Text(new_text).scale(0.30)
+            new_element_text.move_to(rect.get_center())
+
+            self.remove(element[0])
+            self.remove(element[1])
+            self.add(rect)
+            self.play(Write(new_element_text))
+
+            new_element = Group(rect, new_element_text)
+            stack.add(new_element)
+
     def pop(self, stack):
         if len(stack) > 0:
             element = stack[-1]

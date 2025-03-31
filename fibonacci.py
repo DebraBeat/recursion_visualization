@@ -85,52 +85,56 @@ class FibonacciRegular(Scene):
 
 
 class FibonacciWithStack(Scene):
-    # def push(self, stack, element):
-    #     if len(stack) == 0:
-    #         element.move_to(ORIGIN + RIGHT * 6.0)
-    #     else:
-    #         element.move_to(stack.get_top() + (UP * 0.33 / 2))
-    #
-    #     stack.add(element)
-    #     self.play(FadeIn(element))
-    #
-    # def pop(self, stack):
-    #     if len(stack) > 0:
-    #         element = stack[-1]
-    #         self.play(FadeOut(element))
-    #         stack.remove(element)
-    #
-    # def top(self, stack):
-    #     return stack[-1]
-
     def construct(self):
-        colors = [BLUE, GOLD, GREEN, PINK, TEAL]
-        color_index = 0
         stack = Group()
-        group = Group()
         cs = []  # call stack
 
         # Begin main part of program
         # In this program, we'll go through the fibonacci of four
         fib_idx = 4
 
-        intro_text = Text(f'Fibonacci of {fib_idx} using stacks and trees')
-        intro_text.shift(UP)
-        self.play(Write(intro_text))
-        self.wait(1)
-        self.play(FadeOut(intro_text))
+        text = Text("The Fibonacci sequence can also be visualized with "
+                           "Stacks and Trees.", font_size=20)
+        text.shift(UP)
+        self.play(Write(text))
+        self.wait(2)
+        self.play(FadeOut(text))
 
         stack_text = Text('Stack', color=BLUE)
         stack_text.move_to(ORIGIN + RIGHT * 6.0)
         stack_text.shift(UP * 3.0)
         self.play(FadeIn(stack_text))
-        self.wait(1)
+        self.wait(2)
 
-        root = Tree.add_root(self, f"fib({fib_idx})")
+        text = Text("Each call of the Fibonacci Sequence can visualized "
+                    "as\npushing an element onto the call stack.", font_size=20)
+        self.play(Write(text))
         Stack.push(self, stack, f"fib({fib_idx})")
+        self.wait(4)
+        self.play(FadeOut(text))
 
-        lc = Tree.add_left_child(self, "test", root)
-        rc = Tree.add_right_child(self, "test", root)
-        Tree.remove_vertex(self, root)
+        text = Text("Each call of the Fibonacci Sequence can also be visualized\n"
+                    "as creating a node in a call tree.", font_size=20).shift(DOWN)
+        self.play(Write(text))
+        root = Tree.add_root(self, f'fib({fib_idx})')
+        lc = Tree.add_left_child(self, f'fib({fib_idx - 1})', root)
+        Stack.push(self, stack, f'fib({fib_idx - 1})')
+        rc = Tree.add_right_child(self, f'fib({fib_idx - 2})', root)
+        Stack.push(self, stack, f'fib({fib_idx - 2})')
+        self.wait(4)
+        self.play(FadeOut(text))
 
+        text = Text("Since nodes and stack elements are the same, once we have\n"
+                    "calculated them, we can remove them.", font_size=20).shift(DOWN)
+        self.play(Write(text))
+        rrc = Tree.add_right_child(self, f'fib({fib_idx - 3})', rc)
+        Stack.push(self, stack, f'fib({fib_idx - 3})')
         self.wait(3)
+        rrc = Tree.replace_text(self, "1", rrc)
+        Stack.change(self, stack, "1")
+        Tree.remove_child(self, rrc)
+        Tree.remove_child(self, rc)
+        Stack.pop(self, stack)
+        Tree.remove_child(self, lc)
+        Stack.pop(self, stack)
+        self.wait(4)
