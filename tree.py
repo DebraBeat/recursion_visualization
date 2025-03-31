@@ -23,7 +23,7 @@ class Tree(Scene):
         left_child = Group(vertex_outline, vertex_text)
 
         left_child.move_to(parent_coor)
-        left_child.shift((DOWN + LEFT) * 1.1)
+        left_child.shift(DOWN + (LEFT * 0.8))
 
         edge = Line(vertex_outline.get_center(), parent_coor, color=LIGHT_BROWN).scale(0.5)
 
@@ -40,7 +40,7 @@ class Tree(Scene):
         right_child = Group(vertex_outline, vertex_text)
 
         right_child.move_to(parent_coor)
-        right_child.shift((DOWN + RIGHT) * 1.1)
+        right_child.shift(DOWN + (RIGHT * 0.8))
 
         edge = Line(vertex_outline.get_center(), parent_coor, color=LIGHT_BROWN).scale(0.5)
 

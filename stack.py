@@ -24,7 +24,7 @@ class Stack(Scene):
         ele = Group(rect, text)
 
         if len(stack) == 0:
-            ele.move_to(ORIGIN + RIGHT * 6.0)
+            ele.move_to(ORIGIN + RIGHT * 6.0 + DOWN)
         else:
             ele.move_to(stack.get_top() + (UP * 0.33 / 2))
 
@@ -39,7 +39,7 @@ class Stack(Scene):
         ele = Group(rect, text)
 
         if len(stack) == 0:
-            ele.move_to(ORIGIN + RIGHT * 6.0)
+            ele.move_to(ORIGIN + RIGHT * 6.0 + DOWN)
         else:
             ele.move_to(stack.get_top() + (UP * 0.33 / 2))
 

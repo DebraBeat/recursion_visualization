@@ -96,7 +96,7 @@ class FibonacciWithStack(Scene):
             language="python",
             background_config={"stroke_color": WHITE},
             paragraph_config={"font": "Noto Sans Mono"},
-        ).scale(0.5).shift(LEFT * 4 + UP * 2.5)
+        ).scale(0.5)
 
         # Begin main part of program
         # In this program, we'll go through the fibonacci of four
@@ -108,7 +108,7 @@ class FibonacciWithStack(Scene):
         self.play(FadeOut(text))
 
         stack_text = Text('Stack', color=BLUE)
-        stack_outline = Rectangle(width=1.2, height=2.8, color=BLUE).shift(ORIGIN + RIGHT * 6.0 + UP)
+        stack_outline = Rectangle(width=1.2, height=3.4, color=BLUE).shift(ORIGIN + RIGHT * 6.0)
         stack_text.move_to(ORIGIN + RIGHT * 6.0)
         stack_text.shift(UP * 3.0)
         self.play(FadeIn(stack_text, stack_outline))
@@ -141,8 +141,6 @@ class FibonacciWithStack(Scene):
         self.wait(3)
         rrc = Tree.replace_text(self, "1", rrc)
         Stack.change(self, stack, "1")
-        # Stack.pop(self, stack)
-        # Stack.push(self, stack, "1")
         Tree.remove_child(self, rrc)
         Stack.pop(self, stack)
         Stack.quick_pop(self, stack)
@@ -155,9 +153,52 @@ class FibonacciWithStack(Scene):
         self.wait(3)
         self.play(FadeOut(text))
 
-        text = Text("Let's load the code for the Fibonacci sequence and go\n"
-                    "through the sequence for four.", font_size=20)
+        text = Text("Let's load the code for the Fibonacci sequence",
+                    font_size=20).shift(DOWN)
         self.play(Write(text))
         self.wait(2)
         self.play(FadeIn(listing))
         self.play(FadeOut(text))
+
+        text = Text("Let's go over the code to understand it's recursiveness."
+                    , font_size=20).shift(DOWN)
+        self.play(Write(text))
+        self.wait(3)
+        self.play(FadeOut(text))
+
+        text = Text("Now let's visualize the fibonacci sequence for 4.",
+                    font_size=20).shift(DOWN)
+        self.play(Write(text))
+        self.play(listing.animate.shift(LEFT * 4 + UP * 2.5))
+        self.play(FadeOut(text))
+
+        root = Tree.add_root(self, f'fib({fib_idx})')
+        Stack.push(self, stack, f'fib({fib_idx})')
+        cs.append([root, fib_idx, True])
+
+        while cs:
+            curr_vertex, curr_val, is_root = cs.pop()
+
+            if curr_val == 0 or curr_val == 1:
+                # curr_vertex = Tree.replace_text(self, "1", curr_vertex)
+                # Stack.change(self, stack, "1")
+                # Tree.remove_child(self, curr_vertex)
+                # Stack.pop(self, stack)
+                # Stack.quick_pop(self, stack)
+                continue
+
+            lc = Tree.add_left_child(self, f"fib({curr_val - 1})", curr_vertex)
+            cs.append([lc, curr_val - 1, False])
+            Stack.push(self, stack, f"fib({curr_val - 1})")
+
+            rc = Tree.add_right_child(self, f"fib({curr_val - 2})", curr_vertex)
+            cs.append([rc, curr_val - 2, False])
+            Stack.push(self, stack, f"fib({curr_val - 2})")
+            # fib_val = fib(curr_val)
+            #
+            # if not is_root:
+            #     curr_vertex = Tree.replace_text(self, str(fib_val), curr_vertex)
+            #     Stack.change(self, stack, str(fib_val))
+            #     Tree.remove_child(self, curr_vertex)
+            #     Stack.pop(self, stack)
+            #     Stack.quick_pop(self, stack)
