@@ -88,11 +88,18 @@ class FibonacciWithStack(Scene):
     def construct(self):
         stack = Group()
         cs = []  # call stack
+        fib_idx = 4
+        listing = Code(
+            "example.py",
+            formatter_style="emacs",
+            background="window",
+            language="python",
+            background_config={"stroke_color": WHITE},
+            paragraph_config={"font": "Noto Sans Mono"},
+        ).scale(0.5).shift(LEFT * 4 + UP * 2.5)
 
         # Begin main part of program
         # In this program, we'll go through the fibonacci of four
-        fib_idx = 4
-
         text = Text("The Fibonacci sequence can also be visualized with "
                            "Stacks and Trees.", font_size=20)
         text.shift(UP)
@@ -101,9 +108,10 @@ class FibonacciWithStack(Scene):
         self.play(FadeOut(text))
 
         stack_text = Text('Stack', color=BLUE)
+        stack_outline = Rectangle(width=1.2, height=2.8, color=BLUE).shift(ORIGIN + RIGHT * 6.0 + UP)
         stack_text.move_to(ORIGIN + RIGHT * 6.0)
         stack_text.shift(UP * 3.0)
-        self.play(FadeIn(stack_text))
+        self.play(FadeIn(stack_text, stack_outline))
         self.wait(2)
 
         text = Text("Each call of the Fibonacci Sequence can visualized "
@@ -125,16 +133,31 @@ class FibonacciWithStack(Scene):
         self.play(FadeOut(text))
 
         text = Text("Since nodes and stack elements are the same, once we have\n"
-                    "calculated them, we can remove them.", font_size=20).shift(DOWN)
+                    "calculated them, we can remove them.\n"
+                    "(Remember that fib(1) = 1)", font_size=20).shift(DOWN)
         self.play(Write(text))
         rrc = Tree.add_right_child(self, f'fib({fib_idx - 3})', rc)
         Stack.push(self, stack, f'fib({fib_idx - 3})')
         self.wait(3)
         rrc = Tree.replace_text(self, "1", rrc)
         Stack.change(self, stack, "1")
+        # Stack.pop(self, stack)
+        # Stack.push(self, stack, "1")
         Tree.remove_child(self, rrc)
+        Stack.pop(self, stack)
+        Stack.quick_pop(self, stack)
         Tree.remove_child(self, rc)
         Stack.pop(self, stack)
         Tree.remove_child(self, lc)
         Stack.pop(self, stack)
-        self.wait(4)
+        Tree.remove_root(self, root)
+        Stack.pop(self, stack)
+        self.wait(3)
+        self.play(FadeOut(text))
+
+        text = Text("Let's load the code for the Fibonacci sequence and go\n"
+                    "through the sequence for four.", font_size=20)
+        self.play(Write(text))
+        self.wait(2)
+        self.play(FadeIn(listing))
+        self.play(FadeOut(text))

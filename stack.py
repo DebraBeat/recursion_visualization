@@ -31,8 +31,23 @@ class Stack(Scene):
         stack.add(ele)
         self.play(Create(rect), Write(text))
 
+    def quick_push(self, stack, text):
+        rect = Rectangle(width=1, height=0.33)
+        rect.set_stroke(BLUE)
+        text = Text(text, color=WHITE).scale(0.30)
+        text.move_to(rect.get_center())
+        ele = Group(rect, text)
+
+        if len(stack) == 0:
+            ele.move_to(ORIGIN + RIGHT * 6.0)
+        else:
+            ele.move_to(stack.get_top() + (UP * 0.33 / 2))
+
+        stack.add(ele)
+        self.add(rect, text)
+
     def change(self, stack, new_text):
-        # needs to be rerwitten
+        # needs to be rewritten
         if len(stack) > 0:
             element = stack[-1]
             rect = element[0]
@@ -53,6 +68,11 @@ class Stack(Scene):
             self.play(FadeOut(element))
             stack.remove(element)
 
+    def quick_pop(self, stack):
+        if len(stack) > 0:
+            element = stack[-1]
+            self.remove(element)
+            stack.remove(element)
         # for i in range(5):
         #     rect = Rectangle(width=1, height=0.33)
         #     rect.set_stroke(ORANGE)
