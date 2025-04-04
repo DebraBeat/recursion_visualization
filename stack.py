@@ -2,7 +2,14 @@ from manim import *
 
 
 class Stack(Scene):
+    """
+    This module defines the Stack class for manim, which allows easy stack visualization.
+    """
     def construct(self):
+        """
+        Unused driver code.
+        :return: None
+        """
         stack = Group()
 
         for i in range(5):
@@ -17,6 +24,14 @@ class Stack(Scene):
             self.pop(stack)
 
     def push(self, stack, text):
+        """
+        This allows you to push an element to the stack. Each element is a
+        rectangle of width 1 and height 1/3.
+        TODO: Set width and height in Stack constructor.
+        :param stack: The stack who you will be pushing to
+        :param text: The text to go inside the stack element.
+        :return: None
+        """
         rect = Rectangle(width=1, height=0.33)
         rect.set_stroke(BLUE)
         text = Text(text, color=WHITE).scale(0.30)
@@ -32,6 +47,16 @@ class Stack(Scene):
         self.play(Create(rect), Write(text))
 
     def quick_push(self, stack, text):
+        """
+        This allows you to quickly push an element to the stack. Each element is a
+        rectangle of width 1 and height 1/3. The difference between quick and
+        regular push is that quick push doesn't do any 'self.play' stuff.
+        This method is for use in conjuction with text replacement.
+        TODO: Set width and height in Stack constructor.
+        :param stack: The stack who you will be pushing to
+        :param text: The text to go inside the stack element.
+        :return: None
+        """
         rect = Rectangle(width=1, height=0.33)
         rect.set_stroke(BLUE)
         text = Text(text, color=WHITE).scale(0.30)
@@ -47,6 +72,12 @@ class Stack(Scene):
         self.add(rect, text)
 
     def change(self, stack, new_text):
+        """
+        This method lets you change the text inside the top stack element.
+        :param stack: The stack to change the top element in.
+        :param new_text: The text to replace the old text and be displayed.
+        :return: None
+        """
         # needs to be rewritten
         if len(stack) > 0:
             element = stack[-1]
@@ -63,40 +94,27 @@ class Stack(Scene):
             stack.add(new_element)
 
     def pop(self, stack):
+        """
+        This allows you to pop an element from the stack.
+        TODO: Set width and height in Stack constructor.
+        :param stack: The stack who you will be pushing to.
+        :return: None
+        """
         if len(stack) > 0:
             element = stack[-1]
             self.play(FadeOut(element))
             stack.remove(element)
 
     def quick_pop(self, stack):
+        """
+        This allows you to quickly pop an element from the stack. This is to be
+        used in conjuction with the change method to make sure everything works
+        as intended.
+        TODO: Set width and height in Stack constructor.
+        :param stack: The stack who you will be pushing to.
+        :return: None
+        """
         if len(stack) > 0:
             element = stack[-1]
             self.remove(element)
             stack.remove(element)
-        # for i in range(5):
-        #     rect = Rectangle(width=1, height=0.33)
-        #     rect.set_stroke(ORANGE)
-        #     text = Text("Test", color=ORANGE).scale(0.33)
-        #     text.move_to(rect.get_center())
-        #     ele = Group(rect, text)
-        #     push(ele)
-        #
-        # for i in range(5):
-        #     pop()
-
-# class Driver(Scene):
-#
-#     def construct(self):
-#         stack = Group()
-#         mobStack = Stack()
-#
-#         for i in range(5):
-#             rect = Rectangle(width=1, height=0.33)
-#             rect.set_stroke(ORANGE)
-#             text = Text("Test", color=ORANGE).scale(0.33)
-#             text.move_to(rect.get_center())
-#             ele = Group(rect, text)
-#             mobStack.push(stack, ele)
-#
-#         for i in range(5):
-#             mobStack.pop(stack)
