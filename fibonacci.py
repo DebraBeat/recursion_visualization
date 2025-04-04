@@ -27,6 +27,11 @@ class FibonacciRegular(Scene):
         color_index = 0
         group = Group() # Group for previous rectangles
 
+        text = Text("Recursion Visualization: The Fibnonacci sequence.",
+                    font_size=20).shift(UP * 2.0)
+        self.play(Write(text))
+        self.play(FadeOut(text))
+
         intro_text = Text("The Fibonacci sequence is a sequence of numbers named after "
                           "the mathematician\n \"Fibonacci\" (he only had one word for "
                           "his name).", font_size=20)
@@ -54,14 +59,11 @@ class FibonacciRegular(Scene):
         self.wait(2)
         self.play(FadeOut(transition_text))
 
-        # Run the rectangle creation for the first ten fibonacci
+        # Run the rectangle creation for the first eight fibonacci
         # sequence elements.
-        for i in range(0, 10):
-            curr_fib = np.sqrt(fib(i))
-            # next_fib = np.sqrt(fib(i + 1))
+        for i in range(0, 8):
+            curr_fib = fib(i)
             scale_factor = 1.0 / curr_fib
-            # next_scale_factor = 1.0 / next_fib
-            # next_rect = Rectangle(width=next_fib, height=next_fib).scale(next_scale_factor)
 
             rect = Rectangle(width=curr_fib, height=curr_fib).scale(scale_factor)
             rect.set_fill(colors[color_index], opacity=0.5)
@@ -90,6 +92,9 @@ class FibonacciRegular(Scene):
             rect = Group(rect, t, b, b_text)
             group.add(rect)
             self.play(group.animate.shift(LEFT))
+
+        self.play(FadeOut(group))
+        self.wait(2)
 
 
 class FibonacciWithStack(Scene):

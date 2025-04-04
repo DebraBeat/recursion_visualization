@@ -33,7 +33,7 @@ class Stack(Scene):
         :return: None
         """
         rect = Rectangle(width=1, height=0.33)
-        rect.set_stroke(BLUE)
+        rect.set_stroke(GREEN)
         text = Text(text, color=WHITE).scale(0.30)
         text.move_to(rect.get_center())
         ele = Group(rect, text)
