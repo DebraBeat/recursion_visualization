@@ -2,25 +2,6 @@ from manim import *
 from stack import Stack
 
 
-# def dfs(g, adj, vertex, seen):
-#     """
-#     dfs traversal in manim
-#
-#     :param g: manim representation of graph
-#     :param adj: adjacency list representation of a graph
-#     :param vertex: vertex to run dfs on
-#     :param seen: set of all seen vertices
-#     :return: None
-#     """
-#     for neighbor in adj[vertex]:
-#         edge = (vertex, neighbor)
-#         if neighbor not in seen:
-#             g.vertices[vertex].set_fill(BLUE)
-#             g.edges[edge].set_stroke(BLUE)
-#             seen.add(neighbor)
-#             dfs(g, adj, neighbor, seen)
-
-
 class DFS(Scene):
     """
     Class for DFS visualization
