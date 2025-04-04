@@ -270,8 +270,6 @@ class FibonacciWithStack(Scene):
                    .move_to(UP * 0.5))
         concept_group.add(concept3)
 
-        self.play(Write(list_header))
-
         for i in range(len(concept_group)):
             self.play(Write(concept_group[i]))
             self.wait(3)
