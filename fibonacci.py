@@ -253,7 +253,7 @@ class FibonacciWithStack(Scene):
         concept_group.add(list_header)
 
         concept1 = (Text("- Recursive functions: The fibonacci sequence is "
-                        "recursive. A funcamental subject in PLC", font_size=20)
+                        "recursive. A fundamental subject in PLC", font_size=20)
                    .move_to(UP * 1.5))
         concept_group.add(concept1)
 
