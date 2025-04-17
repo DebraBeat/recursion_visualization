@@ -1,5 +1,4 @@
 from manim import *
-import numpy as np
 from stack import Stack # Custom stack class for easy stack visualization
 from tree import Tree # Custom tree class for easy tree visualization
 
@@ -31,6 +30,7 @@ class FibonacciRegular(Scene):
                     font_size=20).shift(UP * 2.0)
         self.play(Write(text))
         self.play(FadeOut(text))
+        self.wait(1)
 
         intro_text = Text("The Fibonacci sequence is a sequence of numbers named after "
                           "the mathematician\n \"Fibonacci\" (he only had one word for "
@@ -44,7 +44,7 @@ class FibonacciRegular(Scene):
                                "two.\n In other words F_0 = 1, F_1 = 1, F_n = "
                                "F_{n-1} + F_{n-2}", font_size=20)
 
-        transition_text = Text("If we set make squares with the length of a side being"
+        transition_text = Text("If we make squares with the length of a side being"
                                "a fibonacci number we get the following:", font_size=20)
 
         # Next two blocks of code are writing relevant information
@@ -176,10 +176,11 @@ class FibonacciWithStack(Scene):
         self.play(FadeIn(listing))
         self.play(FadeOut(text))
 
-        text = Text("Let's go over the code to understand it's recursiveness."
+        text = Text("Since the code calls on itself, it is recursive."
+                    "\nTake a moment to look over the code."
                     , font_size=20).shift(DOWN)
         self.play(Write(text))
-        self.wait(3)
+        self.wait(8)
         self.play(FadeOut(text))
 
         text = Text("Now let's visualize the fibonacci sequence for 4.",
